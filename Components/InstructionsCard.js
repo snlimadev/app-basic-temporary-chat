@@ -36,7 +36,7 @@ export default function InstructionsCard(props) {
   return (
     <View style={props.themeBgColor}>
       <Card containerStyle={[props.themeBgColor, styles.roundedBorder]}>
-        <Text style={[styles.cardHeader, styles.textCenter, styles.pbTiny]}>
+        <Text style={[styles.cardHeader, styles.fwBold, styles.labelColor, styles.textCenter, styles.pbTiny]}>
           INSTRUCTIONS
         </Text>
 

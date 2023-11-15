@@ -71,7 +71,7 @@ export function sendMessage(textMessage, setTextMessage, ws, readyState) {
 //#endregion
 
 //#region Function to handle chat messages / Função para lidar com as mensagens do chat
-export function handleChatMessages(e, setMessages, setNotificationTitle, setNotificationBody, navigate) {
+export function handleChatMessages(e, setMessages, user, setNotificationTitle, setNotificationBody, navigate) {
   try {
     const messageData = JSON.parse(e.data);
     const sender = messageData.sender;
@@ -87,7 +87,7 @@ export function handleChatMessages(e, setMessages, setNotificationTitle, setNoti
         event: event
       }]);
 
-      if (!event) {
+      if (sender !== user && !event) {
         setNotificationTitle(`New message from ${sender}`);
         setNotificationBody(message);
       }

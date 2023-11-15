@@ -18,7 +18,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-async function schedulePushNotification(notificationTitle, notificationBody, setNotificationTitle, setNotificationBody) {
+async function schedulePushNotification(notificationTitle, notificationBody) {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: notificationTitle,
@@ -26,9 +26,6 @@ async function schedulePushNotification(notificationTitle, notificationBody, set
     },
     trigger: null,
   });
-
-  setNotificationTitle('');
-  setNotificationBody('');
 }
 //#endregion
 
@@ -67,7 +64,7 @@ export default function Chat(props) {
   };
 
   const updateChatMessages = (e) => {
-    handleChatMessages(e, setChatMessages, setNotificationTitle, setNotificationBody, navigate);
+    handleChatMessages(e, setChatMessages, user, setNotificationTitle, setNotificationBody, navigate);
   };
 
   const sendIdleMessage = () => {
@@ -153,7 +150,7 @@ export default function Chat(props) {
 
   useEffect(() => {
     if (notificationTitle && notificationBody && appState.current === 'background') {
-      schedulePushNotification(notificationTitle, notificationBody, setNotificationTitle, setNotificationBody);
+      schedulePushNotification(notificationTitle, notificationBody);
     }
   }, [notificationTitle, notificationBody]);
   //#endregion
