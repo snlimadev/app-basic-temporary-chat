@@ -131,6 +131,7 @@ export default function Chat(props) {
     const subscription = AppState.addEventListener('change', nextAppState => {
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
+      (appState.current === 'active') && Notifications.dismissAllNotificationsAsync();
     });
 
     return () => {
