@@ -18,6 +18,20 @@ Notifications.setNotificationHandler({
   }),
 });
 
+async function registerForPushNotificationsAsync() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    return;
+  }
+}
+
 async function schedulePushNotification(notificationTitle, notificationBody) {
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -140,6 +154,8 @@ export default function Chat(props) {
   }, []);
 
   useEffect(() => {
+    registerForPushNotificationsAsync();
+
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
