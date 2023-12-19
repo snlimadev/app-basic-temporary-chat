@@ -120,6 +120,7 @@ export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendId
       message: 'Warning',
       description: 'Your session will expire in 60 seconds due to inactivity.',
       type: 'warning',
+      icon: 'warning',
       duration: 5000
     });
 
@@ -129,6 +130,7 @@ export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendId
       message: 'Error',
       description: 'Your session expired due to inactivity.',
       type: 'danger',
+      icon: 'danger',
       duration: 5000
     });
 
