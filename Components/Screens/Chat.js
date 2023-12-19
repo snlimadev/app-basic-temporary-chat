@@ -227,7 +227,6 @@ export default function Chat(props) {
 
       <Dialog
         isVisible={loadingVisible}
-        onBackdropPress={() => setLoadingVisible(false)}
       >
         <Dialog.Title title='CONNECTING...' titleStyle={styles.textCenter} />
         <Dialog.Loading />
