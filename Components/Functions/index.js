@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 import styles from '../../css/styles';
 
@@ -28,10 +28,13 @@ export function handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom,
     };
 
     ws.onerror = () => {
-      Alert.alert(
-        'Error',
-        'Connection to the server lost. Please check your internet connection and try again later.'
-      );
+      showMessage({
+        message: 'Connection to the server lost',
+        description: 'Please check your internet connection and try again later.',
+        type: 'danger',
+        icon: 'danger',
+        duration: 5000
+      });
     };
 
     ws.onmessage = (e) => {
@@ -92,10 +95,13 @@ export function handleChatMessages(e, setMessages, user, setNotificationTitle, s
         setNotificationBody(message);
       }
     } else if (messageData.error) {
-      Alert.alert(
-        'Error',
-        messageData.error
-      );
+      showMessage({
+        message: 'Error',
+        description: messageData.error,
+        type: 'danger',
+        icon: 'danger',
+        duration: 5000
+      });
 
       navigate('Home');
     }
@@ -110,17 +116,21 @@ export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendId
   if (idleTimeoutCounter < 8) {
     sendIdleMessage();
   } else if (idleTimeoutCounter < 9) {
-    Alert.alert(
-      'Warning',
-      'Your session will expire in 60 seconds due to inactivity.'
-    );
+    showMessage({
+      message: 'Warning',
+      description: 'Your session will expire in 60 seconds due to inactivity.',
+      type: 'warning',
+      duration: 5000
+    });
 
     setIdleTimeoutCounter(idleTimeoutCounter + 1);
   } else {
-    Alert.alert(
-      'Error',
-      'Your session expired due to inactivity.'
-    );
+    showMessage({
+      message: 'Error',
+      description: 'Your session expired due to inactivity.',
+      type: 'danger',
+      duration: 5000
+    });
 
     navigate('Home');
   }

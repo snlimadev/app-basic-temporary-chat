@@ -227,8 +227,9 @@ export default function Chat(props) {
 
       <Dialog
         isVisible={loadingVisible}
+        overlayStyle={[themeBgColor, styles.roundedBorder]}
       >
-        <Dialog.Title title='CONNECTING...' titleStyle={styles.textCenter} />
+        <Dialog.Title title='CONNECTING...' titleStyle={[styles.textCenter, themeTextColor]} />
         <Dialog.Loading />
       </Dialog>
     </>
