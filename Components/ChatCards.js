@@ -1,11 +1,11 @@
 import { View } from 'react-native';
-import { Text, Card } from '@rneui/base';
+import { Text, Card } from '@rneui/themed';
 
 import styles from '../css/styles';
 
 export default function ChatCards(props) {
   return (
-    <View style={props.themeBgColor}>
+    <View>
       {
         props.chatMessages.map((messageData, index) => {
           const cardHeaderUser = messageData.sender;
@@ -21,7 +21,7 @@ export default function ChatCards(props) {
             const lines = cardBodyMessageFormatted.split('\n');
 
             cardBodyMessageWithLineBreaks = lines.map((line, lineIndex) => (
-              <Text key={lineIndex} style={props.themeTextColor}>
+              <Text key={lineIndex}>
                 {line}
                 {(lineIndex !== lines.length - 1) && '\n'}
               </Text>
@@ -30,19 +30,19 @@ export default function ChatCards(props) {
           //#endregion
 
           return (
-            <Card key={index} containerStyle={[props.themeBgColor, styles.roundedBorder]}>
+            <Card key={index}>
               {
                 (cardBodyEvent) ? (
-                  <Text style={props.themeTextColor}>
+                  <Text style={null}>
                     {cardBodyEvent}
                   </Text>
                 ) : (
                   <>
-                    <Text style={[styles.cardHeader, styles.fwBold, styles.labelColor, styles.pbTiny]}>
+                    <Text style={[styles.cardHeader, styles.fwBold, styles.labelColor]}>
                       {cardHeaderUser}
                     </Text>
 
-                    <Text selectable style={styles.ptTiny}>
+                    <Text selectable style={styles.cardBody}>
                       {cardBodyMessageWithLineBreaks}
                     </Text>
 

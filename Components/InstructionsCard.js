@@ -1,6 +1,6 @@
 import { View, Share } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import { Text, Button, Card } from '@rneui/base';
+import { Text, Button, Card } from '@rneui/themed';
 import { showMessage } from 'react-native-flash-message';
 
 import styles from '../css/styles';
@@ -35,13 +35,13 @@ export default function InstructionsCard(props) {
   //#endregion
 
   return (
-    <View style={props.themeBgColor}>
-      <Card containerStyle={[props.themeBgColor, styles.roundedBorder]}>
-        <Text style={[styles.cardHeader, styles.fwBold, styles.labelColor, styles.textCenter, styles.pbTiny]}>
+    <View>
+      <Card>
+        <Text style={[styles.cardHeader, styles.fwBold, styles.labelColor, styles.textCenter]}>
           INSTRUCTIONS
         </Text>
 
-        <Text selectable style={[props.themeTextColor, styles.textCenter, styles.pvTiny]}>
+        <Text selectable style={[styles.cardBody, styles.textCenter]}>
           Please be aware this is a temporary chat room
           that disappears after the last person leaves.
           Also, your session will expire if you don't send any messages
@@ -58,8 +58,6 @@ export default function InstructionsCard(props) {
           }}
           type='outline'
           size='sm'
-          containerStyle={styles.pvTiny}
-          buttonStyle={styles.roundedBorder}
           onPress={copy} />
 
         <Button
@@ -72,7 +70,7 @@ export default function InstructionsCard(props) {
           }}
           type='outline'
           size='sm'
-          buttonStyle={styles.roundedBorder}
+          containerStyle={{ paddingVertical: 0 }}
           onPress={share} />
       </Card>
     </View>

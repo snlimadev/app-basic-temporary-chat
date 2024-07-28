@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   containerScrollView: {
     flexGrow: 1,
     justifyContent: 'center',
+    padding: 10,
   },
 
   textCenter: {
@@ -19,90 +20,22 @@ const styles = StyleSheet.create({
     color: '#86939E',
   },
 
-  roundedBorder: {
-    borderRadius: 10,
-  },
-  //#endregion
-
-  //#region Top bar styles / Estilos da barra superior
-  topBarColor: {
-    backgroundColor: '#00A2E8',
-  },
-
-  topBarText: {
-    color: 'white',
+  focusedInput: {
+    borderColor: '#00A2E8',
   },
 
   topBarCustomTitle: {
+    color: 'white',
     fontSize: 20,
   },
   //#endregion
 
-  //#region Dark and light theme styles / Estilos dos temas claro e escuro
-  darkThemeBgColor: {
-    backgroundColor: 'black',
-  },
-
-  darkThemeTextColor: {
-    color: 'white',
-  },
-
-  lightThemeBgColor: {
-    backgroundColor: 'white',
-  },
-
-  lightThemeTextColor: {
-    color: 'black',
-  },
-  //#endregion
-
-  //#region Padding styles / Estilos que definem o espaçamento interno
-  pvTiny: {
-    paddingVertical: 4,
-  },
-
-  pvSmall: {
-    paddingVertical: 10,
-  },
-
-  phSmall: {
+  //#region Drop down styles / Estilos do drop down
+  dropDownContainer: {
     paddingHorizontal: 10,
-  },
-
-  ptTiny: {
-    paddingTop: 5,
-  },
-
-  ptSmall: {
-    paddingTop: 10,
-  },
-
-  prTiny: {
-    paddingRight: 6,
-  },
-
-  pbTiny: {
-    paddingBottom: 5,
-  },
-
-  pbSmall: {
-    paddingBottom: 10,
-  },
-
-  pbMedium: {
     paddingBottom: 20,
   },
 
-  plTiny: {
-    paddingLeft: 6,
-  },
-
-  plSmall: {
-    paddingLeft: 10,
-  },
-  //#endregion
-
-  //#region Drop down styles / Estilos do drop down
   dropDownLabel: {
     fontSize: 15,
   },
@@ -112,35 +45,40 @@ const styles = StyleSheet.create({
   },
   //#endregion
 
-  //#region Text input styles / Estilos dos campos de texto
-  inputStyle: {
-    borderWidth: 1,
+  //#region Card styles / Estilos do card
+  cardHeader: {
+    borderBottomWidth: 1,
+    borderColor: '#CCCCCC40',
+    paddingBottom: 5,
   },
 
-  focusedInput: {
-    borderColor: '#00A2E8',
+  cardBody: {
+    paddingTop: 5,
+    paddingBottom: 0,
+  },
+
+  cardFooter: {
+    fontSize: 12,
+    textAlign: 'right',
+    paddingBottom: 0,
   },
   //#endregion
 
   //#region Chat screen exclusive styles / Estilos exclusivos da tela de chat
   chatContainer: {
     flexGrow: 1,
+    paddingBottom: 10,
   },
 
   messageContainer: {
     maxHeight: 120,
-  },
-  //#endregion
-
-  //#region Card styles / Estilos do card
-  cardHeader: {
-    borderBottomWidth: 1,
-    borderColor: '#DEDDE0',
+    paddingVertical: 4,
   },
 
-  cardFooter: {
-    fontSize: 12,
-    textAlign: 'right',
+  messageInput: {
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    paddingLeft: 6,
   },
   //#endregion
 });

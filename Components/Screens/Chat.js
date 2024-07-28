@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { ScrollView, View, BackHandler, Keyboard, AppState } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { Input, Icon } from '@rneui/base';
-import { Dialog } from '@rneui/themed';
+import { Input, Icon, Dialog } from '@rneui/themed';
 
 import styles from '../../css/styles';
-import { changeTheme, handleWebSocketEvents, createOrJoinRoom, sendMessage, handleChatMessages, extendIdleTime } from '../Functions';
+import { handleWebSocketEvents, createOrJoinRoom, sendMessage, handleChatMessages, extendIdleTime } from '../Functions';
 import InstructionsCard from '../InstructionsCard';
 import ChatCards from '../ChatCards';
 
@@ -44,8 +43,6 @@ async function schedulePushNotification(notificationTitle, notificationBody) {
 //#endregion
 
 export default function Chat(props) {
-  const [themeBgColor, setThemeBgColor] = useState(styles.lightThemeBgColor);
-  const [themeTextColor, setThemeTextColor] = useState(styles.lightThemeTextColor);
   const [message, setMessage] = useState('');
   const [focusedInput, setFocusedInput] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -138,10 +135,6 @@ export default function Chat(props) {
   }, []);
 
   useEffect(() => {
-    changeTheme(props.isDarkMode, setThemeBgColor, setThemeTextColor);
-  }, [props.isDarkMode]);
-
-  useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
@@ -177,18 +170,13 @@ export default function Chat(props) {
       <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={scrollToBottom}
-        contentContainerStyle={[styles.chatContainer, styles.pbSmall]}
-        style={themeBgColor}
+        contentContainerStyle={styles.chatContainer}
       >
         <InstructionsCard
-          themeBgColor={themeBgColor}
-          themeTextColor={themeTextColor}
           roomCode={roomCode}
         />
 
         <ChatCards
-          themeBgColor={themeBgColor}
-          themeTextColor={themeTextColor}
           chatMessages={chatMessages}
         />
       </ScrollView>
@@ -203,33 +191,26 @@ export default function Chat(props) {
           onContentSizeChange={scrollToBottom}
           onFocus={() => setFocusedInput(true)}
           onBlur={() => setFocusedInput(false)}
-          containerStyle={[themeBgColor, styles.messageContainer, styles.pvTiny]}
-          inputStyle={themeTextColor}
+          containerStyle={styles.messageContainer}
           inputContainerStyle={[
             (focusedInput) && styles.focusedInput,
-            styles.inputStyle,
-            styles.roundedBorder,
-            styles.plSmall
+            styles.messageInput
           ]}
           rightIcon={
             <Icon
               name='paper-airplane'
               type='octicon'
               color={(buttonDisabled) ? 'lightgray' : '#2089DC'}
-              style={[styles.pvTiny, styles.phSmall]}
               onPress={handleSendMessage}
               disabled={buttonDisabled}
-              disabledStyle={themeBgColor}
+              containerStyle={{ paddingHorizontal: 0 }}
             />
           }
         />
       </View>
 
-      <Dialog
-        isVisible={loadingVisible}
-        overlayStyle={[themeBgColor, styles.roundedBorder]}
-      >
-        <Dialog.Title title='CONNECTING...' titleStyle={[styles.textCenter, themeTextColor]} />
+      <Dialog isVisible={loadingVisible}>
+        <Dialog.Title title='CONNECTING...' />
         <Dialog.Loading />
       </Dialog>
     </>

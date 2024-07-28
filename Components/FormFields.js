@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Text, Input, Button } from '@rneui/base';
+import { Text, Input, Button } from '@rneui/themed';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -19,14 +19,13 @@ export default function FormFields(props) {
 
   return (
     <ScrollView
-      contentContainerStyle={[styles.containerScrollView, styles.pvSmall]}
-      style={props.themeBgColor}
+      contentContainerStyle={styles.containerScrollView}
       keyboardShouldPersistTaps='handled'
     >
       {
         (props.buttonText === 'CREATE') ? (
-          <View style={[styles.phSmall, styles.pbMedium]}>
-            <Text style={[styles.dropDownLabel, styles.fwBold, styles.labelColor, styles.pbSmall]}>
+          <View style={styles.dropDownContainer}>
+            <Text style={[styles.dropDownLabel, styles.fwBold, styles.labelColor]}>
               Max Room Size
             </Text>
 
@@ -37,9 +36,10 @@ export default function FormFields(props) {
               save='key'
               search={false}
               maxHeight={250}
-              inputStyles={[styles.dropDownInput, props.themeTextColor]}
-              dropdownTextStyles={[styles.dropDownInput, props.themeTextColor]}
-              arrowicon={<Ionicons name='chevron-down' size={20} color={'gray'} />}
+              inputStyles={[styles.dropDownInput, styles.labelColor]}
+              dropdownTextStyles={[styles.dropDownInput, styles.labelColor]}
+              arrowicon={<Ionicons name='chevron-down' size={20} color={'#86939E'} />}
+              boxStyles={{ borderColor: '#86939E' }}
             />
           </View>
         ) : (
@@ -53,15 +53,7 @@ export default function FormFields(props) {
             autoFocus={true}
             onFocus={() => setFocusedInput('roomCode')}
             onBlur={() => setFocusedInput(null)}
-            labelStyle={styles.pbSmall}
-            inputStyle={props.themeTextColor}
-            inputContainerStyle={[
-              (focusedInput === 'roomCode') && styles.focusedInput,
-              styles.inputStyle,
-              styles.roundedBorder,
-              styles.pvTiny,
-              styles.phSmall
-            ]}
+            inputContainerStyle={[(focusedInput === 'roomCode') && styles.focusedInput]}
           />
         )
       }
@@ -73,22 +65,12 @@ export default function FormFields(props) {
         onChangeText={props.setUserName}
         onFocus={() => setFocusedInput('userName')}
         onBlur={() => setFocusedInput(null)}
-        labelStyle={styles.pbSmall}
-        inputStyle={props.themeTextColor}
-        inputContainerStyle={[
-          (focusedInput === 'userName') && styles.focusedInput,
-          styles.inputStyle,
-          styles.roundedBorder,
-          styles.pvTiny,
-          styles.phSmall
-        ]}
+        inputContainerStyle={[(focusedInput === 'userName') && styles.focusedInput]}
       />
 
       <Button
         title={props.buttonText}
         size='lg'
-        buttonStyle={styles.roundedBorder}
-        containerStyle={[styles.phSmall, styles.pvSmall]}
         onPress={props.buttonAction}
         disabled={props.buttonDisabled}
       />

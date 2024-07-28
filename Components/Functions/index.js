@@ -1,19 +1,5 @@
 import { showMessage } from 'react-native-flash-message';
 
-import styles from '../../css/styles';
-
-//#region Function to enable/disable dark mode / Função para ativar/desativar o modo escuro
-export function changeTheme(isDarkMode, setThemeBgColor, setThemeTextColor) {
-  if (isDarkMode) {
-    setThemeBgColor(styles.darkThemeBgColor);
-    setThemeTextColor(styles.darkThemeTextColor);
-  } else {
-    setThemeBgColor(styles.lightThemeBgColor);
-    setThemeTextColor(styles.lightThemeTextColor);
-  }
-}
-//#endregion
-
 //#region Function to handle Web Socket events / Função para lidar com os eventos do Web Socket
 export function handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom, updateChatMessages, navigate) {
   if (ws) {
