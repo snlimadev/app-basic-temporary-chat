@@ -1,12 +1,13 @@
 import { View, Share } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import { Text, Button, Card } from '@rneui/themed';
+import { Text, Button, Card, useTheme } from '@rneui/themed';
 import { showMessage } from 'react-native-flash-message';
 
 import styles from '../css/styles';
 
 export default function InstructionsCard(props) {
-  const roomCodeToShare = `Room code for Basic - Temporary Chat is ${props.roomCode}`
+  const { theme } = useTheme();
+  const roomCodeToShare = `Room code for Basic - Temporary Chat is ${props.roomCode}`;
 
   //#region Local functions / Funções locais
   const copy = async () => {
@@ -54,11 +55,12 @@ export default function InstructionsCard(props) {
             name: 'copy',
             type: 'font-awesome',
             size: 15,
-            color: '#00A2E8',
+            color: theme.colors.primary,
           }}
           type='outline'
           size='sm'
-          onPress={copy} />
+          onPress={copy}
+        />
 
         <Button
           title='SHARE ROOM CODE'
@@ -66,12 +68,13 @@ export default function InstructionsCard(props) {
             name: 'share-alt',
             type: 'font-awesome',
             size: 15,
-            color: '#00A2E8',
+            color: theme.colors.primary,
           }}
           type='outline'
           size='sm'
           containerStyle={{ paddingVertical: 0 }}
-          onPress={share} />
+          onPress={share}
+        />
       </Card>
     </View>
   );

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   messageInput: {
     paddingVertical: 0,
     paddingHorizontal: 0,
-    paddingLeft: 6,
+    paddingLeft: 10,
   },
   //#endregion
 });

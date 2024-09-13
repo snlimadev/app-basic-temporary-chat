@@ -43,16 +43,23 @@ const customTheme = createTheme({
         backgroundColor: 'transparent',
       },
     },
-    Dialog: {
+    Dialog: (props, theme) => ({
       overlayStyle: {
         borderRadius: 10,
+        backgroundColor: theme.colors.white,
+        borderWidth: 0.5,
+        borderColor: theme.colors.grey4,
       },
-    },
-    DialogTitle: {
+      backdropStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      },
+    }),
+    DialogTitle: (props, theme) => ({
       titleStyle: {
         textAlign: 'center',
+        color: theme.colors.black,
       },
-    },
+    }),
   },
   mode: 'light',
 });

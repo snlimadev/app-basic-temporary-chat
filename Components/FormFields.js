@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Text, Input, Button } from '@rneui/themed';
+import { Text, Input, Button, useTheme } from '@rneui/themed';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -8,6 +8,7 @@ import styles from '../css/styles';
 
 export default function FormFields(props) {
   const [focusedInput, setFocusedInput] = useState(null);
+  const { theme } = useTheme();
 
   //#region Set drop down values from 2 to 16 / Define os valores do drop down de 2 até 16
   const data = [];
@@ -25,7 +26,7 @@ export default function FormFields(props) {
       {
         (props.buttonText === 'CREATE') ? (
           <View style={styles.dropDownContainer}>
-            <Text style={[styles.dropDownLabel, styles.fwBold, styles.labelColor]}>
+            <Text style={[styles.dropDownLabel, styles.fwBold, { color: theme.colors.grey3 }]}>
               Max Room Size
             </Text>
 
@@ -36,10 +37,11 @@ export default function FormFields(props) {
               save='key'
               search={false}
               maxHeight={250}
-              inputStyles={[styles.dropDownInput, styles.labelColor]}
-              dropdownTextStyles={[styles.dropDownInput, styles.labelColor]}
-              arrowicon={<Ionicons name='chevron-down' size={20} color={'#86939E'} />}
-              boxStyles={{ borderColor: '#86939E' }}
+              inputStyles={[styles.dropDownInput, { color: theme.colors.black }]}
+              dropdownTextStyles={[styles.dropDownInput, { color: theme.colors.black }]}
+              arrowicon={<Ionicons name='chevron-down' size={20} color={theme.colors.black} />}
+              boxStyles={{ borderColor: theme.colors.grey3 }}
+              dropdownStyles={{ borderColor: theme.colors.grey3 }}
             />
           </View>
         ) : (
