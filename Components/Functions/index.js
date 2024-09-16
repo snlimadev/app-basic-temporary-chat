@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications';
 import { showMessage } from 'react-native-flash-message';
 
 //#region Function to handle Web Socket events / Função para lidar com os eventos do Web Socket
@@ -64,11 +65,13 @@ export function handleChatMessages(e, setMessages, user, setNotificationTitle, s
   try {
     const messageData = JSON.parse(e.data);
     const sender = messageData.sender;
-    const time = messageData.time;
     const message = messageData.message;
     const event = messageData.event;
 
-    if ((sender && time && message) || event) {
+    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const time = new Intl.DateTimeFormat('pt-BR', options).format(new Date());
+
+    if ((sender && message) || event) {
       setMessages(prevMessages => [...prevMessages, {
         sender: sender,
         time: time,
@@ -122,5 +125,31 @@ export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendId
 
     navigate('Home');
   }
+}
+//#endregion
+
+//#region Handle push notifications / Lida com as notificações push
+export async function registerForPushNotificationsAsync() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    return;
+  }
+}
+
+export async function schedulePushNotification(notificationTitle, notificationBody) {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: notificationTitle,
+      body: notificationBody.replace(/\\n/g, '\n'),
+    },
+    trigger: null,
+  });
 }
 //#endregion

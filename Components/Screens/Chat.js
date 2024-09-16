@@ -4,11 +4,14 @@ import * as Notifications from 'expo-notifications';
 import { Input, Icon, Dialog } from '@rneui/themed';
 
 import styles from '../../css/styles';
-import { handleWebSocketEvents, createOrJoinRoom, sendMessage, handleChatMessages, extendIdleTime } from '../Functions';
+import {
+  handleWebSocketEvents, createOrJoinRoom, sendMessage, handleChatMessages,
+  extendIdleTime, registerForPushNotificationsAsync, schedulePushNotification
+} from '../Functions';
 import InstructionsCard from '../InstructionsCard';
 import ChatCards from '../ChatCards';
 
-//#region Handle push notifications / Lida com as notificações por push
+// Configure push notifications / Configura notificações push
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -16,31 +19,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-
-async function registerForPushNotificationsAsync() {
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
-
-  if (finalStatus !== 'granted') {
-    return;
-  }
-}
-
-async function schedulePushNotification(notificationTitle, notificationBody) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: notificationTitle,
-      body: notificationBody.replace(/\\n/g, '\n'),
-    },
-    trigger: null,
-  });
-}
-//#endregion
 
 export default function Chat(props) {
   const [message, setMessage] = useState('');
@@ -172,13 +150,9 @@ export default function Chat(props) {
         onContentSizeChange={scrollToBottom}
         contentContainerStyle={styles.chatContainer}
       >
-        <InstructionsCard
-          roomCode={roomCode}
-        />
+        <InstructionsCard roomCode={roomCode} />
 
-        <ChatCards
-          chatMessages={chatMessages}
-        />
+        <ChatCards chatMessages={chatMessages} />
       </ScrollView>
 
       <View>
