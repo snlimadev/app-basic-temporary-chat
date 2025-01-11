@@ -16,6 +16,7 @@
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~48.0.11",
+    "expo-build-properties": "~0.6.0",
     "expo-clipboard": "~4.1.2",
     "expo-notifications": "~0.18.1",
     "react": "18.2.0",
@@ -23,10 +24,10 @@
     "react-native-dropdown-select-list": "^2.0.5",
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "~2.9.0",
+    "react-native-google-mobile-ads": "^12.11.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
-    "react-native-screens": "~3.20.0",
-    "expo-build-properties": "~0.6.0"
+    "react-native-screens": "~3.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
