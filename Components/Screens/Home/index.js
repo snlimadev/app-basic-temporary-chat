@@ -1,10 +1,26 @@
+import { useState, useCallback } from 'react';
 import { ScrollView } from 'react-native';
 import { Text, Button } from '@rneui/themed';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from '../../../css/styles';
 
+const BANNER_ID = 'ca-app-pub-4878437225305198/8858041564';
+
 export default function Home(props) {
+  const [shouldShowBanner, setShouldShowBanner] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setShouldShowBanner(true);
+
+      return () => {
+        setShouldShowBanner(false);
+      };
+    }, [])
+  );
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.containerScrollView}>
@@ -27,13 +43,15 @@ export default function Home(props) {
         />
       </ScrollView>
 
-      <BannerAd
-        unitId='ca-app-pub-4878437225305198/8858041564'
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true
-        }}
-      />
+      {(shouldShowBanner) && (
+        <BannerAd
+          unitId={(__DEV__) ? TestIds.BANNER : BANNER_ID}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true
+          }}
+        />
+      )}
     </>
   );
 }
