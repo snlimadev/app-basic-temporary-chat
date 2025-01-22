@@ -11,7 +11,6 @@ export function handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom,
 
     ws.onclose = () => {
       setReadyState('CLOSED');
-      navigate('Home');
     };
 
     ws.onerror = () => {
@@ -22,6 +21,8 @@ export function handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom,
         icon: 'danger',
         duration: 5000
       });
+
+      navigate('Home');
     };
 
     ws.onmessage = (e) => {

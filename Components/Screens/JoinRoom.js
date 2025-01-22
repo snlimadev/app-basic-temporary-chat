@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 import FormFields from '../FormFields';
+
+const BANNER_ID = 'ca-app-pub-4878437225305198/5059542562';
 
 export default function JoinRoom(props) {
   const [roomCode, setRoomCode] = useState('');
@@ -20,14 +23,24 @@ export default function JoinRoom(props) {
   }, [roomCode, userName]);
 
   return (
-    <FormFields
-      roomCode={roomCode}
-      setRoomCode={setRoomCode}
-      userName={userName}
-      setUserName={setUserName}
-      buttonText='JOIN'
-      buttonAction={handleJoinRoom}
-      buttonDisabled={buttonDisabled}
-    />
+    <>
+      <FormFields
+        roomCode={roomCode}
+        setRoomCode={setRoomCode}
+        userName={userName}
+        setUserName={setUserName}
+        buttonText='JOIN'
+        buttonAction={handleJoinRoom}
+        buttonDisabled={buttonDisabled}
+      />
+
+      <BannerAd
+        unitId={(__DEV__) ? TestIds.BANNER : BANNER_ID}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true
+        }}
+      />
+    </>
   );
 }

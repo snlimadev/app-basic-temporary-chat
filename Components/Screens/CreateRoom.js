@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 import FormFields from '../FormFields';
+
+const BANNER_ID = 'ca-app-pub-4878437225305198/6693285912';
 
 export default function CreateRoom(props) {
   const [maxRoomSize, setMaxRoomSize] = useState();
@@ -23,13 +26,23 @@ export default function CreateRoom(props) {
   }, [userName]);
 
   return (
-    <FormFields
-      setMaxRoomSize={setMaxRoomSize}
-      userName={userName}
-      setUserName={setUserName}
-      buttonText='CREATE'
-      buttonAction={handleCreateRoom}
-      buttonDisabled={buttonDisabled}
-    />
+    <>
+      <FormFields
+        setMaxRoomSize={setMaxRoomSize}
+        userName={userName}
+        setUserName={setUserName}
+        buttonText='CREATE'
+        buttonAction={handleCreateRoom}
+        buttonDisabled={buttonDisabled}
+      />
+
+      <BannerAd
+        unitId={(__DEV__) ? TestIds.BANNER : BANNER_ID}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true
+        }}
+      />
+    </>
   );
 }
