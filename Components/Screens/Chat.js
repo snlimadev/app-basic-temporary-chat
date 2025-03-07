@@ -174,7 +174,7 @@ export default function Chat(props) {
             <Icon
               name='paper-airplane'
               type='octicon'
-              color={(buttonDisabled) ? 'lightgray' : '#2089DC'}
+              color={(buttonDisabled) ? 'lightgray' : '#00A2E8'}
               onPress={handleSendMessage}
               disabled={buttonDisabled}
               containerStyle={{ paddingHorizontal: 0 }}

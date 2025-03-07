@@ -1,6 +1,10 @@
 import { createTheme } from '@rneui/themed';
 
 const customTheme = createTheme({
+  lightColors: { primary: '#00A2E8' },
+
+  darkColors: { primary: '#00A2E8' },
+
   components: {
     Text: {
       style: {
@@ -61,6 +65,7 @@ const customTheme = createTheme({
       },
     }),
   },
+
   mode: 'light',
 });
 
