@@ -1,22 +1,16 @@
 import { useState } from 'react';
-import { Text } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Icon, useTheme } from '@rneui/themed';
-import styles from '../../css/styles';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Icon } from '@rneui/base';
+import { useTheme } from '@rneui/themed';
 
 import Home from '../Screens/Home';
 import CreateRoom from '../Screens/CreateRoom';
 import JoinRoom from '../Screens/JoinRoom';
 import Chat from '../Screens/Chat';
 
-const Stack = createStackNavigator();
-
-const CustomTitle = (props) => (
-  <Text selectable style={[styles.topBarCustomTitle, styles.fwBold]}>
-    {props.title}
-  </Text>
-);
+const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   const [themeIcon, setThemeIcon] = useState('moon');
@@ -31,44 +25,50 @@ export default function Routes() {
 
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: '#00A2E8' },
-          headerTitleAlign: 'center',
-          headerTitleStyle: { color: 'white' },
-          headerTintColor: 'white',
-          headerRight: () => (
-            <Icon
-              name={themeIcon}
-              type='ionicon'
-              color='white'
-              onPress={toggleDarkMode}
-            />
-          )
-        }}
-      >
-        <Stack.Screen name='Home' component={Home} />
-
-        <Stack.Screen name='Create Room' component={CreateRoom} />
-
-        <Stack.Screen name='Join Room' component={JoinRoom} />
-
-        <Stack.Screen
-          name='Chat'
-          component={Chat}
-          options={(props) => ({
-            headerTitle: () => <CustomTitle title={`Room ${props.route.params.roomCode}`} />,
-            headerLeft: () => (
+      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: '#00A2E8' },
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: 'white' },
+            headerTintColor: 'white',
+            headerRight: () => (
               <Icon
-                name={'home'}
+                name={themeIcon}
                 type='ionicon'
                 color='white'
-                onPress={() => props.navigation.navigate('Home')}
+                onPress={toggleDarkMode}
+                style={{ padding: 4 }}
+                containerStyle={{ borderRadius: 20 }}
               />
             )
-          })}
-        />
-      </Stack.Navigator>
+          }}
+        >
+          <Stack.Screen name='Home' component={Home} />
+
+          <Stack.Screen name='Create Room' component={CreateRoom} />
+
+          <Stack.Screen name='Join Room' component={JoinRoom} />
+
+          <Stack.Screen
+            name='Chat'
+            component={Chat}
+            options={(props) => ({
+              headerTitle: `Room ${props.route.params.roomCode}`,
+              headerLeft: () => (
+                <Icon
+                  name='home'
+                  type='ionicon'
+                  color='white'
+                  onPress={() => props.navigation.navigate('Home')}
+                  style={{ padding: 4 }}
+                  containerStyle={{ borderRadius: 20 }}
+                />
+              )
+            })}
+          />
+        </Stack.Navigator>
+      </View>
     </NavigationContainer>
   );
 }

@@ -2,42 +2,21 @@
   "expo": {
     "name": "Basic Chat",
     "slug": "basic-temporary-chat",
-    "version": "1.2.4",
+    "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/icon-notification.png"
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 33,
-            "targetSdkVersion": 35,
-            "buildToolsVersion": "33.0.0"
-          }
-        }
-      ]
-    ],
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#00A2E8"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "package": "com.snlimadev.basictemporarychat",
-      "versionCode": 19,
+      "versionCode": 21,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#00A2E8"
@@ -50,7 +29,25 @@
       "eas": {
         "projectId": "735466f9-33d9-47c4-9680-c3d1726c37a2"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "34.0.0"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon-notification.png"
+        }
+      ]
+    ]
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-4878437225305198~8221409447"

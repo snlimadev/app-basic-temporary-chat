@@ -28,6 +28,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
   //#endregion
 
   //#region Drop down styles / Estilos do drop down

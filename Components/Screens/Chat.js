@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { ScrollView, View, BackHandler, Keyboard, AppState } from 'react-native';
+import { ScrollView, View, BackHandler, Keyboard, AppState, Modal } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { Input, Icon, Dialog } from '@rneui/themed';
+import { Input, Icon, Card, Text, Button } from '@rneui/themed';
 
 import styles from '../../css/styles';
 import {
@@ -183,10 +183,14 @@ export default function Chat(props) {
         />
       </View>
 
-      <Dialog isVisible={loadingVisible}>
-        <Dialog.Title title='CONNECTING...' />
-        <Dialog.Loading />
-      </Dialog>
+      <Modal visible={loadingVisible} transparent onRequestClose={() => null}>
+        <View style={styles.modalOverlay}>
+          <Card>
+            <Text style={[styles.fwBold, styles.textCenter]}>CONNECTING...</Text>
+            <Button type='clear' loading disabled />
+          </Card>
+        </View>
+      </Modal>
     </>
   );
 }

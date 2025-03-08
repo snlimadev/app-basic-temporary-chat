@@ -47,23 +47,6 @@ const customTheme = createTheme({
         backgroundColor: 'transparent',
       },
     },
-    Dialog: (props, theme) => ({
-      overlayStyle: {
-        borderRadius: 10,
-        backgroundColor: theme.colors.white,
-        borderWidth: 0.5,
-        borderColor: theme.colors.grey4,
-      },
-      backdropStyle: {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      },
-    }),
-    DialogTitle: (props, theme) => ({
-      titleStyle: {
-        textAlign: 'center',
-        color: theme.colors.black,
-      },
-    }),
   },
 
   mode: 'light',
