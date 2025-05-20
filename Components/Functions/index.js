@@ -132,15 +132,9 @@ export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendId
 //#region Handle push notifications / Lida com as notificações push
 export async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
 
   if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
-
-  if (finalStatus !== 'granted') {
-    return;
+    await Notifications.requestPermissionsAsync();
   }
 }
 

@@ -28,7 +28,7 @@ export default function Routes() {
       <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: '#00A2E8' },
+            headerStyle: { backgroundColor: theme.colors.primary },
             headerTitleAlign: 'center',
             headerTitleStyle: { color: 'white' },
             headerTintColor: 'white',
