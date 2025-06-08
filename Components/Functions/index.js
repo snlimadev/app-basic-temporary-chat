@@ -2,16 +2,13 @@ import * as Notifications from 'expo-notifications';
 import { showMessage } from 'react-native-flash-message';
 
 //#region Function to handle Web Socket events / Função para lidar com os eventos do Web Socket
-export function handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom, updateChatMessages, navigate) {
+export function handleWebSocketEvents(ws, handleCreateOrJoinRoom, updateChatMessages, navigate) {
   if (ws) {
     ws.onopen = () => {
-      setReadyState('OPEN');
       handleCreateOrJoinRoom();
     };
 
-    ws.onclose = () => {
-      setReadyState('CLOSED');
-    };
+    ws.onclose = () => { };
 
     ws.onerror = () => {
       showMessage({
@@ -41,21 +38,20 @@ export function createOrJoinRoom(action, user, roomCode, maxClients, ws) {
     maxClients: maxClients
   };
 
-  ws.send(JSON.stringify(messageData));
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(messageData));
+  }
 };
 //#endregion
 
 //#region Function to send messages / Função para enviar mensagens
-export function sendMessage(textMessage, setTextMessage, ws, readyState) {
-  if (readyState === 'OPEN') {
-    const messageData = {
-      text: textMessage
-    };
+export function sendMessage(textMessage, setTextMessage, ws) {
+  const messageData = {
+    text: textMessage
+  };
 
-    if (ws) {
-      ws.send(JSON.stringify(messageData));
-    }
-
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(messageData));
     setTextMessage('');
   }
 };
@@ -96,12 +92,12 @@ export function handleChatMessages(e, setMessages, user, setNotificationTitle, s
       navigate('Home');
     }
   } catch (error) {
-    console.log('Failed to parse message data: ', error);
+    console.error('Failed to parse message data: ', error);
   }
 }
 //#endregion
 
-//#region Extend idle time from 3 to 10 minutes / Aumenta o tempo de inatividade de 3 para 10 minutos
+//#region Extend idle time to 10 minutes / Aumenta o tempo de inatividade para 10 minutos
 export function extendIdleTime(idleTimeoutCounter, setIdleTimeoutCounter, sendIdleMessage, navigate) {
   if (idleTimeoutCounter < 8) {
     sendIdleMessage();

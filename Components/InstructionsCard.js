@@ -7,7 +7,7 @@ import styles from '../css/styles';
 
 export default function InstructionsCard(props) {
   const { theme } = useTheme();
-  const roomCodeToShare = `Room code for Basic - Temporary Chat is ${props.roomCode}`;
+  const roomCodeToShare = `The room code for Basic - Temporary Chat is ${props.roomCode}`;
 
   //#region Local functions / Funções locais
   const copy = async () => {
@@ -46,7 +46,7 @@ export default function InstructionsCard(props) {
           Please be aware this is a temporary chat room
           that disappears after the last person leaves.
           Also, your session will expire if you don't send any messages
-          for 10 minutes or keep the app in the background for over 3 minutes.
+          for 10 minutes.
         </Text>
 
         <Button

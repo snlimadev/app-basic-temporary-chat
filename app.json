@@ -2,7 +2,7 @@
   "expo": {
     "name": "Basic Chat",
     "slug": "basic-temporary-chat",
-    "version": "1.2.7",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     },
     "android": {
       "package": "com.snlimadev.basictemporarychat",
-      "versionCode": 22,
+      "versionCode": 23,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#00A2E8"
@@ -36,7 +36,7 @@
         {
           "android": {
             "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
+            "targetSdkVersion": 35,
             "buildToolsVersion": "34.0.0"
           }
         }

@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { ScrollView, View, BackHandler, Keyboard, AppState, Modal } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { ScrollView, View, BackHandler, Keyboard, AppState, Modal, Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Input, Icon, Card, Text, Button } from '@rneui/themed';
 
@@ -25,30 +25,43 @@ export default function Chat(props) {
   const [focusedInput, setFocusedInput] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loadingVisible, setLoadingVisible] = useState(true);
-  const [readyState, setReadyState] = useState('CONNECTING');
   const [chatMessages, setChatMessages] = useState([]);
   const [idleMessage, setIdleMessage] = useState('');
   const [idleTimeoutCounter, setIdleTimeoutCounter] = useState(0);
-  const [notification, setNotification] = useState(false);
+  const [notification, setNotification] = useState(undefined);
   const [notificationTitle, setNotificationTitle] = useState('');
   const [notificationBody, setNotificationBody] = useState('');
+  const [appState, setAppState] = useState(AppState.currentState);
 
-  const ws = useMemo(() => new WebSocket('wss://api-basic-temporary-chat.glitch.me'), []);
+  const ws = useRef(null);
   const scrollViewRef = useRef(null);
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const notificationListener = useRef(null);
   const { action, user, roomCode, maxClients } = props.route.params;
   const navigate = props.navigation.navigate;
 
   //#region Local functions / Funções locais
+  const handleConnect = () => {
+    if (!ws.current) {
+      setLoadingVisible(true);
+      ws.current = new WebSocket('wss://api-basic-temporary-chat.onrender.com');
+      handleWebSocketEvents(ws.current, handleCreateOrJoinRoom, updateChatMessages, navigate);
+    }
+  };
+
+  const handleDisconnect = () => {
+    if (ws.current) {
+      ws.current.close();
+      ws.current = null;
+    }
+  };
+
   const handleCreateOrJoinRoom = () => {
-    createOrJoinRoom(action, user, roomCode, maxClients, ws);
+    createOrJoinRoom(action, user, roomCode, maxClients, ws.current);
     setLoadingVisible(false);
   };
 
   const handleSendMessage = () => {
-    sendMessage(message, setMessage, ws, readyState);
+    sendMessage(message, setMessage, ws.current);
     setIdleTimeoutCounter(0);
   };
 
@@ -57,7 +70,7 @@ export default function Chat(props) {
   };
 
   const sendIdleMessage = () => {
-    sendMessage(idleMessage, setIdleMessage, ws, readyState);
+    sendMessage(idleMessage, setIdleMessage, ws.current);
     setIdleTimeoutCounter(idleTimeoutCounter + 1);
   };
 
@@ -73,14 +86,18 @@ export default function Chat(props) {
 
   //#region useEffect hooks
   useEffect(() => {
-    handleWebSocketEvents(ws, setReadyState, handleCreateOrJoinRoom, updateChatMessages, navigate);
-
     return () => {
-      if (ws && readyState === 'OPEN') {
-        ws.close();
-      }
+      handleDisconnect();
     };
-  }, [readyState]);
+  }, []);
+
+  useEffect(() => {
+    if (appState === 'active') {
+      handleConnect();
+    } else if (Platform.OS === 'android' && Platform.Version >= 35) {
+      handleDisconnect();
+    }
+  }, [appState]);
 
   useEffect(() => {
     (message.trim()) ? setButtonDisabled(false) : setButtonDisabled(true);
@@ -114,9 +131,11 @@ export default function Chat(props) {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
-      appState.current = nextAppState;
-      setAppStateVisible(appState.current);
-      (appState.current === 'active') && Notifications.dismissAllNotificationsAsync();
+      setAppState(nextAppState);
+
+      if (!(Platform.OS === 'android' && Platform.Version >= 35) && nextAppState === 'active') {
+        Notifications.dismissAllNotificationsAsync();
+      }
     });
 
     return () => {
@@ -125,7 +144,9 @@ export default function Chat(props) {
   }, []);
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    if (!(Platform.OS === 'android' && Platform.Version >= 35)) {
+      registerForPushNotificationsAsync();
+    }
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
@@ -137,8 +158,10 @@ export default function Chat(props) {
   }, []);
 
   useEffect(() => {
-    if (notificationTitle && notificationBody && appState.current === 'background') {
-      schedulePushNotification(notificationTitle, notificationBody);
+    if (notificationTitle && notificationBody && appState === 'background') {
+      if (!(Platform.OS === 'android' && Platform.Version >= 35)) {
+        schedulePushNotification(notificationTitle, notificationBody);
+      }
     }
   }, [notificationTitle, notificationBody]);
   //#endregion
