@@ -12,7 +12,7 @@ export function handleWebSocketEvents(ws, handleCreateOrJoinRoom, updateChatMess
 
     ws.onerror = () => {
       showMessage({
-        message: 'Connection to the server lost',
+        message: 'Connection lost',
         description: 'Please check your internet connection and try again later.',
         type: 'danger',
         icon: 'danger',

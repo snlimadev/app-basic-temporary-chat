@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
     borderColor: '#00A2E8',
   },
 
-  topBarCustomTitle: {
-    color: 'white',
-    fontSize: 20,
-  },
-
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
